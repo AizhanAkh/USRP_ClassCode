@@ -768,7 +768,7 @@ int input_read_parameters(
   /** Dark matter Sigma Cross section Power n, and other background quantities*/
   class_read_double("n_power_bcdm",pba->n_power_bcdm);
   class_read_double("mass_h_bcdm",pba->mass_h_bcdm);
-  class_read_double("mass_cdm_bcdm",pba->mass_cdm_bcdm);
+  class_read_double("mass_cdm_bcdm",pba->mass_cdm);
   class_read_double("f_he_bcdm",pba->f_he_bcdm);
   class_read_double("sigma_0_bcdm",pba->sigma_0_bcdm);
 
@@ -1282,7 +1282,7 @@ int input_read_parameters(
       pth->has_coupling_bcdm=_TRUE_;
     }
     else{
-      if((strstr(string1,"n")!=NULL) || (strstr(string1,"N") !=NULL)) {
+      if((strstr(string,"n")!=NULL) || (strstr(string1,"N") !=NULL)) {
 	pth->has_coupling_bcdm=_FALSE_;
       }
       else {
