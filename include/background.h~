@@ -50,7 +50,6 @@ struct background
   double n_power_bcdm; /** power n  */
   double f_he_bcdm; /** helium correction factor */
   double sigma_0_bcdm; /** scattering cross-section for matter */
-  double mass_h_bcdm; /** mass of hydrogen - unsure whether it is already in the code */
   double mass_cdm_bcdm; /** mass of cold dark matter*/
   
   double Omega0_lambda; /**< \f$ \Omega_{0_\Lambda} \f$: cosmological constant */

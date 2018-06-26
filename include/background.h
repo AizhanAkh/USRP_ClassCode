@@ -47,6 +47,10 @@ struct background
 
   double Omega0_cdm; /**< \f$ \Omega_{0 cdm} \f$: cold dark matter */
   
+  double Omega0_dmeff; /**< \f$ \Omega_{0 dmeff} \f$: interacting dark matter */
+  double Vrel_dmeff_rate; /** relative velocity of dmeff*/ 
+  double m_dmeff; /** mass of dmeff*/
+
   double n_power_bcdm; /** power n  */
   double f_he_bcdm; /** helium correction factor */
   double sigma_0_bcdm; /** scattering cross-section for matter */
@@ -164,6 +168,9 @@ struct background
   int index_bg_rho_g;         /**< photon density */
   int index_bg_rho_b;         /**< baryon density */
   int index_bg_rho_cdm;       /**< cdm density */
+ 
+  int index_bg_rho_dmeff;     /**< dmeff density */
+  
   int index_bg_rho_lambda;    /**< cosmological constant density */
   int index_bg_rho_fld;       /**< fluid density */
   int index_bg_w_fld;         /**< fluid equation of state */
@@ -201,6 +208,14 @@ struct background
   int bg_size_short;  /**< size of background vector in the "short format" */
   int bg_size_normal; /**< size of background vector in the "normal format" */
   int bg_size;        /**< size of background vector in the "long format" */
+
+  /** all dmeff quantities*/
+  int index_bg_Tdmeff;
+  int index_bg_Vrms;
+  int index_bg_dkappa_dmeff;
+  int index_bg_dkappaT_dmeff;
+  int index_bg_cdmeff2;
+  
 
   //@}
 
@@ -276,6 +291,7 @@ struct background
   short has_ur;        /**< presence of ultra-relativistic neutrinos/relics? */
   short has_curvature; /**< presence of global spatial curvature? */
 
+  short has_dmeff;     /**< presence of interacting dark matter? */ 
   //@}
 
   /**

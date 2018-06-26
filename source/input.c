@@ -766,8 +766,12 @@ int input_read_parameters(
   Omega_tot += pba->Omega0_cdm;
 
   /** Dark matter Sigma Cross section Power n, and other background quantities*/
+  /** Actually only dmeff, will see about others later*/
+
+  /** Add stuff to read Omega0_dmeff*/ 
+
+  class_read_double("m_deff",pba->m_deff);
   class_read_double("n_power_bcdm",pba->n_power_bcdm);
-  class_read_double("mass_h_bcdm",pba->mass_h_bcdm);
   class_read_double("mass_cdm_bcdm",pba->mass_cdm_bcdm);
   class_read_double("f_he_bcdm",pba->f_he_bcdm);
   class_read_double("sigma_0_bcdm",pba->sigma_0_bcdm);
