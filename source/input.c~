@@ -785,12 +785,11 @@ int input_read_parameters(
   /** Dark matter Sigma Cross section Power n, and other background quantities*/
   /** Actually only dmeff, will see about others later*/
 
-  class_read_double("m_deff",pba->m_deff);
-  class_read_double("n_power_dmeff",pba->n_power_dmeff);
-
-  class_read_double("mass_cdm_bcdm",pba->mass_cdm_bcdm);
-  class_read_double("f_he_bcdm",pba->f_he_bcdm);
-  class_read_double("sigma_0_bcdm",pba->sigma_0_bcdm);
+  class_read_double("m_deff",pba->m_dmeff);
+  class_read_double("n_power_dmeff",pba->npow_dmeff);
+  class_read_double("F_he_dmeff",pba->F_he_dmeff);
+  class_read_double("sigma_0_dmeff",pba->sigma_0_dmeff);
+  class_read_double("f_he_dmeff", pba->f_he_dmeff);
 
   /** - Omega_0_dcdmdr (DCDM) */
   class_call(parser_read_double(pfc,"Omega_dcdmdr",&param1,&flag1,errmsg),
@@ -1296,17 +1295,17 @@ int input_read_parameters(
   }
 
 
-  class_call(parser_read_string(pfc,"bcdm coupling",&(string1),&(flag1),errmsg),errmsg, errmsg);
+  class_call(parser_read_string(pfc,"has_dmeff",&(string1),&(flag1),errmsg),errmsg, errmsg);
   if(flag1 == _TRUE_){
     if( (strstr(string1,"y")!=NULL) || (strstr(string1,"Y") !=NULL)) {
-      pth->has_coupling_bcdm=_TRUE_;
+      pth->has_dmeff=_TRUE_;
     }
     else{
       if((strstr(string1,"n")!=NULL) || (strstr(string1,"N") !=NULL)) {
-	pth->has_coupling_bcdm=_FALSE_;
+	pth->has_dmeff=_FALSE_;
       }
       else {
-	class_stop(errmsg,"incomprehensible input '%s' for the field 'bcdm coupling' ", string1);
+	class_stop(errmsg,"print 'Y' or 'N', not '%s' ", string1);
       }
     }
   }
@@ -2941,13 +2940,13 @@ int input_default_params(
   pba->ncdm_psd_parameters = NULL;
   pba->ncdm_psd_files = NULL;
   
-  pba->n_power_dmeff = 0.0; /* default values of dmeff interaction ? */
+  pba->npow_dmeff = 0.0; /* default values of dmeff interaction ? */
   pba->m_dmeff = 0.;
   pba->Omega0_dmeff = 0.;
-
-  pba->mass_cdm_bcdm = 0.;
-  pba->f_he_bcdm = 0.76;
-  pba->sigma_0_bcdm = 0.;
+  pba->F_he_dmeff = 0.76;
+  pba->f_he_dmeff = 0.24;
+  pba->sigma_0_dmeff = 0.;
+  pba->has_dmeff = _FALSE_;
 
   pba->Omega0_scf = 0.; /* Scalar field defaults */
   pba->attractor_ic_scf = _TRUE_;

@@ -310,6 +310,14 @@ int background_functions(
     rho_m += pvecback[pba->index_bg_rho_cdm];
   }
 
+  /* dmeff */
+  if (pba->has_dmeff == _TRUE_) {
+    pvecback[pba->index_bg_rho_dmeff] = pba->Omega0_dmeff * pow(pba->H0,2) / pow(a_rel,3);
+    rho_tot += pvecback[pba->index_bg_rho_dmeff];
+    p_tot += 0.;
+    rho_m += pvecback[pba->index_bg_rho_dmeff];
+  }
+
   /* dcdm */
   if (pba->has_dcdm == _TRUE_) {
     /* Pass value of rho_dcdm to output */
@@ -409,7 +417,7 @@ int background_functions(
     rho_tot += pvecback[pba->index_bg_rho_fld];
     p_tot += w_fld * pvecback[pba->index_bg_rho_fld];
   }
-  
+
   /* relativistic neutrinos (and all relativistic relics) */
   if (pba->has_ur == _TRUE_) {
     pvecback[pba->index_bg_rho_ur] = pba->Omega0_ur * pow(pba->H0,2) / pow(a_rel,4);
@@ -429,6 +437,14 @@ int background_functions(
 
   /** - compute relativistic density to total density ratio */
   pvecback[pba->index_bg_Omega_r] = rho_r / rho_tot;
+
+  /** - compute dmeff quantities */
+  if (pba->has_dmeff == _TRUE_) {
+    pvecback[pba->index_bg_Tdmeff] = pba->T_cmb;
+    pvecback[pba->index_bg_dkappa_dmeff] = 0.0;
+    pvecback[pba->index_bg_dkappaT_dmeff] = 0.0;
+    pvecback[pba->index_bg_cdmeff2] = (pba->T_cmb/a_rel)*_k_B_/(pba->m_dmeff*_c_*_c_) * (1. + a_rel / 3.);
+  }
 
   /** - compute other quantities in the exhaustive, redundant format */
   if (return_format == pba->long_info) {
@@ -789,7 +805,7 @@ int background_indices(
 
   if (pba->Omega0_fld != 0.)
     pba->has_fld = _TRUE_;
-  
+
   if (pba->Omega0_ur != 0.)
     pba->has_ur = _TRUE_;
 
@@ -847,7 +863,7 @@ int background_indices(
   /* - index for fluid */
   class_define_index(pba->index_bg_rho_fld,pba->has_fld,index_bg,1);
   class_define_index(pba->index_bg_w_fld,pba->has_fld,index_bg,1);
-  
+
   /* - index for ultra-relativistic neutrinos/species */
   class_define_index(pba->index_bg_rho_ur,pba->has_ur,index_bg,1);
 
@@ -2034,7 +2050,6 @@ int background_output_titles(struct background * pba,
   class_store_columntitle(titles,"(.)rho_lambda",pba->has_lambda);
   class_store_columntitle(titles,"(.)rho_fld",pba->has_fld);
   class_store_columntitle(titles,"(.)w_fld",pba->has_fld);
-
   class_store_columntitle(titles,"(.)rho_ur",pba->has_ur);
   class_store_columntitle(titles,"(.)rho_crit",_TRUE_);
   class_store_columntitle(titles,"(.)rho_dcdm",pba->has_dcdm);

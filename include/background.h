@@ -52,9 +52,9 @@ struct background
   double m_dmeff; /** mass of dmeff*/
   double npow_dmeff; /** power n  */
 
-  double f_he_bcdm; /** helium correction factor */
-  double sigma_0_bcdm; /** scattering cross-section for matter */
-  double mass_cdm_bcdm; /** mass of cold dark matter*/
+  double F_he_dmeff; /** helium correction factor */
+  double sigma_0_dmeff; /** scattering cross-section for matter */
+  double f_he_dmeff; /** helium fraction*/
   
   double Omega0_lambda; /**< \f$ \Omega_{0_\Lambda} \f$: cosmological constant */
 

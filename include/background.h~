@@ -50,7 +50,7 @@ struct background
   double Omega0_dmeff; /**< \f$ \Omega_{0 dmeff} \f$: interacting dark matter */
   double Vrel_dmeff_rate; /** relative velocity of dmeff*/ 
   double m_dmeff; /** mass of dmeff*/
-  double n_power_dmeff; /** power n  */
+  double npow_dmeff; /** power n  */
 
   double f_he_bcdm; /** helium correction factor */
   double sigma_0_bcdm; /** scattering cross-section for matter */

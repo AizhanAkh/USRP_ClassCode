@@ -7195,7 +7195,7 @@ int perturb_derivs(double tau,
 
 	/** R_dmeff for case n = 0, with c0 = 2.1 */
         vth2 = pvecthermo[pth->index_th_Tdmeff]*_k_B_/pba->m_dmeff + pvecthermo[pth->index_th_Tb]*_k_B_/_m_H_;
-	rate_dmeff = pvecthermo[pth->index_th_dkappa_dmeff]*2.1*pvecback[pba->index_bg_rho_b]*pow(vth2, 1/2)*pba->F_he_dmeff/(pba->m_dmeff + _m_H_);
+	rate_dmeff = pvecthermo[pth->index_th_dkappa_dmeff]*2.1*pvecback[pba->index_bg_rho_b]*pow(vth2, 1/2)*pvecback[pba->index_bg_a]*pba->F_he_dmeff/(pba->m_dmeff + _m_H_);
 
 	dy[pv->index_pt_theta_dmeff] = - a_prime_over_a*theta_dmeff + metric_euler + k2*pvecback[pba->index_bg_cdmeff2]*(y[pv->index_pt_delta_dmeff])+ rate_dmeff*(theta_b - theta_dmeff);
 	beta_dmeff = ( rate_dmeff/pvecthermo[pth->index_th_dkappa] ) * R_dmeff / (1. + R);

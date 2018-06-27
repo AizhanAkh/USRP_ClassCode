@@ -275,9 +275,9 @@ struct perturbs
   int index_tp_delta_dmeff;
   int index_tp_theta_dmeff;
 
-  double Vrms_k_dmeff_dynamic;
-  double Vflow_k_dmeff_dynamic;
-  double V2integrand_k_dmeff_dynamic;
+  void *  Vrms_k_dmeff_dynamic;
+  void *  Vflow_k_dmeff_dynamic;
+  void * V2integrand_k_dmeff_dynamic;
   
   /* remember that the temperature source function includes three
      terms that we call 0,1,2 (since the strategy in class v > 1.7 is
@@ -591,8 +591,15 @@ struct perturb_parameters_and_workspace {
   int index_ic;			          /**< index of initial condition (adiabatic/isocurvature(s)/...) */
   int index_k;			          /**< index of wavenumber */
   double k;			              /**< current value of wavenumber in 1/Mpc */
+  int A_s;
+  double k_pivot;
+  int n_s;
+
   struct perturb_workspace * ppw; /**< workspace defined above */
 
+  int index_vrms_tau_current;
+  int index_vrms_tau_lower;
+ 
 };
 
 /*************************************************************************************************************/
