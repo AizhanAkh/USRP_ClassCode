@@ -786,7 +786,8 @@ int input_read_parameters(
   /** Actually only dmeff, will see about others later*/
 
   class_read_double("m_deff",pba->m_deff);
-  class_read_double("n_power_bcdm",pba->n_power_bcdm);
+  class_read_double("n_power_dmeff",pba->n_power_dmeff);
+
   class_read_double("mass_cdm_bcdm",pba->mass_cdm_bcdm);
   class_read_double("f_he_bcdm",pba->f_he_bcdm);
   class_read_double("sigma_0_bcdm",pba->sigma_0_bcdm);
@@ -2940,8 +2941,10 @@ int input_default_params(
   pba->ncdm_psd_parameters = NULL;
   pba->ncdm_psd_files = NULL;
   
-  pba->n_power_bcdm = 0.0; /* default values of bcdm interaction ? */
-  pba->mass_h_bcdm = 0.;
+  pba->n_power_dmeff = 0.0; /* default values of dmeff interaction ? */
+  pba->m_dmeff = 0.;
+  pba->Omega0_dmeff = 0.;
+
   pba->mass_cdm_bcdm = 0.;
   pba->f_he_bcdm = 0.76;
   pba->sigma_0_bcdm = 0.;

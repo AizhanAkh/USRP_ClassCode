@@ -151,6 +151,8 @@ struct thermo
   double annihilation_f_halo; /** takes the contribution of DM annihilation in halos into account*/
   double annihilation_z_halo; /** characteristic redshift for DM annihilation in halos*/
 
+  short has_coupling_bcdm; /** indicates whether bcdm interaction is possible */
+
   //@}
 
   /** @name - all indices for the vector of thermodynamical (=th) quantities stored in table */

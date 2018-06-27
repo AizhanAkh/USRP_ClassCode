@@ -176,6 +176,8 @@ struct thermo
   int index_th_r_d;           /**< simple analytic approximation to the photon comoving damping scale */
   int th_size;                /**< size of thermodynamics vector */
 
+  int index_th_Tdmeff; /** some dmeff quantity*/
+  int index_th_dkappa_dmeff; /** Thomson scattering rate for dkappa/ dtau  */
   //@}
 
   /** @name - thermodynamics interpolation tables */
