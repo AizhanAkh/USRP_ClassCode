@@ -765,8 +765,26 @@ int input_read_parameters(
 
   Omega_tot += pba->Omega0_cdm;
 
+  /** - Omega_0_dmeff (interacting DM) */
+  class_call(parser_read_double(pfc,"Omega_dmeff",&param1,&flag1,errmsg),
+	     errmsg,
+	     errmsg);
+  class_call(parser_read_double(pfc,"omega_dmeff",&param2,&flag2,errmsg),
+             errmsg,
+             errmsg);
+  class_test(((flag1 == _TRUE_) && (flag2 == _TRUE_)),
+             errmsg,
+             "In input file, you can only enter one of Omega_dmeff or omega_dmeff, choose one");
+  if (flag1 == _TRUE_)
+    pba->Omega0_dmeff = param1;
+  if (flag2 == _TRUE_)
+    pba->Omega0_dmeff = param2/pba->h/pba->h;
+
+  Omega_tot += pba->Omega0_dmeff;
+
   /** Dark matter Sigma Cross section Power n, and other background quantities*/
   /** Actually only dmeff, will see about others later*/
+
   class_read_double("m_deff",pba->m_deff);
   class_read_double("n_power_bcdm",pba->n_power_bcdm);
   class_read_double("mass_cdm_bcdm",pba->mass_cdm_bcdm);
