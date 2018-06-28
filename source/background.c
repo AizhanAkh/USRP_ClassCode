@@ -440,8 +440,8 @@ int background_functions(
 
   /** - compute dmeff quantities */
   if (pba->has_dmeff == _TRUE_) {
-    pvecback[pba->index_bg_Tdmeff] = pba->T_cmb;
-    pvecback[pba->index_bg_dkappa_dmeff] = 0.0;
+    pvecback[pba->index_bg_Tdmeff] = pba->T_cmb/a_rel;
+    pvecback[pba->index_bg_dkappa_dmeff] = pba->sigma_0_dmeff;
     pvecback[pba->index_bg_dkappaT_dmeff] = 0.0;
     pvecback[pba->index_bg_cdmeff2] = (pba->T_cmb/a_rel)*_k_B_/(pba->m_dmeff*_c_*_c_) * (1. + a_rel / 3.);
   }
@@ -776,6 +776,7 @@ int background_indices(
   /** - initialize all flags: which species are present? */
 
   pba->has_cdm = _FALSE_;
+  pba->has_dmeff = _FALSE_;
   pba->has_ncdm = _FALSE_;
   pba->has_dcdm = _FALSE_;
   pba->has_dr = _FALSE_;

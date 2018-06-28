@@ -1298,11 +1298,11 @@ int input_read_parameters(
   class_call(parser_read_string(pfc,"has_dmeff",&(string1),&(flag1),errmsg),errmsg, errmsg);
   if(flag1 == _TRUE_){
     if( (strstr(string1,"y")!=NULL) || (strstr(string1,"Y") !=NULL)) {
-      pth->has_dmeff=_TRUE_;
+      pba->has_dmeff=_TRUE_;
     }
     else{
       if((strstr(string1,"n")!=NULL) || (strstr(string1,"N") !=NULL)) {
-	pth->has_dmeff=_FALSE_;
+	pba->has_dmeff=_FALSE_;
       }
       else {
 	class_stop(errmsg,"print 'Y' or 'N', not '%s' ", string1);

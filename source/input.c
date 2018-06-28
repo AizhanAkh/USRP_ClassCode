@@ -2941,7 +2941,7 @@ int input_default_params(
   pba->ncdm_psd_files = NULL;
   
   pba->npow_dmeff = 0.0; /* default values of dmeff interaction ? */
-  pba->m_dmeff = 0.;
+  pba->m_dmeff = 1.673575e-27; /* set it equal to mass of H for now*/
   pba->Omega0_dmeff = 0.;
   pba->F_he_dmeff = 0.76;
   pba->f_he_dmeff = 0.24;

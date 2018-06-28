@@ -125,9 +125,6 @@ int thermodynamics_at_z(
     /* Calculate dkappa/dtau (dkappa/dtau = a n_e x_e sigma_T = a^{-2} n_e(today) x_e sigma_T in units of 1/Mpc) */
     pvecthermo[pth->index_th_dkappa] = (1.+z) * (1.+z) * pth->n_e * x0 * _sigma_ * _Mpc_over_m_;
 
-    /* Assign value to dkappa/dtau */
-    pvecthermo[pth->index_th_dkappa_dmeff] = pba->sigma_0_dmeff;
-
     /* tau_d scales like (1+z)**2 */
     pvecthermo[pth->index_th_tau_d] = pth->thermodynamics_table[(pth->tt_size-1)*pth->th_size+pth->index_th_tau_d]*pow((1+z)/(1.+pth->z_table[pth->tt_size-1]),2);
 
@@ -157,9 +154,6 @@ int thermodynamics_at_z(
 
     /* Calculate Tb */
     pvecthermo[pth->index_th_Tb] = pba->T_cmb*(1.+z);
-
-    /* Calculate Tdmeff */
-    pvecthermo[pth->index_th_Tdmeff] = pba->T_cmb*(1.+z);
 
     /* Calculate cb2 (cb2 = (k_B/mu) Tb (1-1/3 dlnTb/dlna) = (k_B/mu) Tb (1+1/3 (1+z) dlnTb/dz)) */
     /* note that m_H / mu = 1 + (m_H/m_He-1) Y_p + x_e (1-Y_p) */
@@ -912,8 +906,6 @@ int thermodynamics_indices(
   pth->index_th_ddg = index;
   index++;
   pth->index_th_Tb = index;
-  index++;
-  pth->index_th_Tdmeff = index;
   index++;
   pth->index_th_cb2 = index;
   index++;
@@ -3752,7 +3744,6 @@ int thermodynamics_output_data(struct background * pba,
     //class_store_double(dataptr,pvecthermo[pth->index_th_dg],_TRUE_,storeidx);
     //class_store_double(dataptr,pvecthermo[pth->index_th_ddg],_TRUE_,storeidx);
     class_store_double(dataptr,pvecthermo[pth->index_th_Tb],_TRUE_,storeidx);
-    class_store_double(dataptr,pvecthermo[pth->index_th_Tdmeff],_TRUE_,storeidx);
     class_store_double(dataptr,pvecthermo[pth->index_th_cb2],_TRUE_,storeidx);
     class_store_double(dataptr,pvecthermo[pth->index_th_tau_d],_TRUE_,storeidx);
     //class_store_double(dataptr,pvecthermo[pth->index_th_rate],_TRUE_,storeidx);

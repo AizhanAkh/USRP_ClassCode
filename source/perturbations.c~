@@ -21,8 +21,7 @@
  *
  * -# perturb_init() at the beginning (but after background_init() and thermodynamics_init())
  * -# perturb_sources_at_tau() at any later time
- * -# perturb_free() at the end, when no more calls to perturb_sources_at_tau() are needed
- */
+ * -# perturb_free() at the end, when no more calls to perturb_sources_at_tau() are needed */
 
 #include "perturbations.h"
 
@@ -148,7 +147,7 @@ int perturb_init(
       printf("Computing sources\n");
   }
 
-  class_test((ppt->gauge == synchronous) && (pba->has_cdm == _FALSE_),
+  class_test((ppt->gauge == synchronous) && (pba->has_cdm == _FALSE_) && (pba->has_dmeff == _FALSE_),
              ppt->error_message,
              "In the synchronous gauge, it is not self-consistent to assume no CDM: the later is used to define the initial timelike hypersurface. You can either add a negligible amount of CDM or switch to newtonian gauge");
 
@@ -2510,6 +2509,9 @@ int perturb_prepare_output(struct background * pba,
       /* Cold dark matter */
       class_store_columntitle(ppt->scalar_titles,"delta_cdm",pba->has_cdm);
       class_store_columntitle(ppt->scalar_titles,"theta_cdm",pba->has_cdm);
+      /* Dark Matter with effective interactions */
+      class_store_columntitle(ppt->scalar_titles,"delta_dmeff",pba->has_dmeff);
+      class_store_columntitle(ppt->scalar_titles,"theta_dmeff",pba->has_dmeff);
       /* Non-cold dark matter */
       if ((pba->has_ncdm == _TRUE_) && ((ppt->has_density_transfers == _TRUE_) || (ppt->has_velocity_transfers == _TRUE_) || (ppt->has_source_delta_m == _TRUE_))) {
         for(n_ncdm=0; n_ncdm < pba->N_ncdm; n_ncdm++){
@@ -7187,6 +7189,14 @@ int perturb_derivs(double tau,
     /** -> dmeff */
 
     if (pba->has_dmeff == _TRUE_) {
+
+      /** ---> newtonian gauge: dmeff density and velocity */
+
+      if (ppt->gauge == newtonian) {
+        dy[pv->index_pt_delta_dmeff] = -(theta_dmeff+metric_continuity); /* dmeff density */
+
+	dy[pv->index_pt_theta_dmeff] = - a_prime_over_a*theta_dmeff + metric_euler; /* dmeff velocity */
+      }
       /** ---> synchronous gauge: dmeff density and velocity */
       /* Be sure to use dmeff speed of sound, temperature, or rates from thermo and not background */
 
@@ -7195,9 +7205,18 @@ int perturb_derivs(double tau,
 
 	/** R_dmeff for case n = 0, with c0 = 2.1 */
         vth2 = pvecthermo[pth->index_th_Tdmeff]*_k_B_/pba->m_dmeff + pvecthermo[pth->index_th_Tb]*_k_B_/_m_H_;
-	rate_dmeff = pvecthermo[pth->index_th_dkappa_dmeff]*2.1*pvecback[pba->index_bg_rho_b]*pow(vth2, 1/2)*pvecback[pba->index_bg_a]*pba->F_he_dmeff/(pba->m_dmeff + _m_H_);
+	rate_dmeff = pvecthermo[pth->index_th_dkappa_dmeff]*2.1*pvecback[pba->index_bg_rho_b]*pow(vth2, 1/2)*pba->F_he_dmeff*pvecback[pba->index_bg_a]/(pba->m_dmeff + _m_H_);
 
 	dy[pv->index_pt_theta_dmeff] = - a_prime_over_a*theta_dmeff + metric_euler + k2*pvecback[pba->index_bg_cdmeff2]*(y[pv->index_pt_delta_dmeff])+ rate_dmeff*(theta_b - theta_dmeff);
+
+	if(pba->has_cdm == _TRUE_){
+          // if true, synchronous gauge defined in CDM fluid                                                                   // if false, synchronous gauge defined in dmeff fluid (theta_dmeff set to 0)                                
+          dy[pv->index_pt_theta_dmeff] =
+            - a_prime_over_a*theta_dmeff + metric_euler
+            + k2*pvecback[pth->index_bg_cdmeff2]*(y[pv->index_pt_delta_dmeff])
+            + rate_dmeff*(theta_b - theta_dmeff);
+        }
+
 	beta_dmeff = ( rate_dmeff/pvecthermo[pth->index_th_dkappa] ) * R_dmeff / (1. + R);
 
       }
